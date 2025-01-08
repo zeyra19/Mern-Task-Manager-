@@ -7,7 +7,7 @@ const TasksContext = createContext();
 
 const serverUrl = "https://taskfyer.onrender.com/api/v1";
 
-export const TasksContext = () => {
+export const TasksProvider = ({children}) => {
   const userId = useUserContext().user._id
 
   const [tasks, setTasks] = useState([]); //birden fazla görevler
@@ -20,7 +20,13 @@ export const TasksContext = () => {
   const [modelMode, setModelMode] = useState("")
   const [profileMode, setProfileMode] = useState(false)
 
-  const openModalForEdit = () => {
+  const openModalForAdd = () => {
+    setModelMode("add");
+    setIsEditing(true);
+    setTask({});
+  }
+
+  const openModalForEdit = (task) => {
     setModelMode("edit");
     setIsEditing(true);
     setActiveTask(task);
@@ -68,6 +74,8 @@ export const TasksContext = () => {
     try {
       const res = await axios.post(`${serverUrl}/task/create`, task);
 
+      console.log("Task Oluştu", res.data);
+
       setTasks([...tasks, res.data]);
       toast.success("Task başarıyla oluştu")
     } catch (error) {
@@ -76,4 +84,92 @@ export const TasksContext = () => {
     setLoading(false);
   };
 
-}
+  const updateTask = async (task) => {
+    setLoading(true);
+    try {
+      const res = await axios.patch(`${serverUrl}/task/${task._id}`, task);
+
+      const newTasks = tasks.map((tsk) => {
+        if (task._id === res.data._id) {
+          return res.data;
+        } else {
+          return tsk;
+        }
+      });
+
+      toast.success("Task başarıyla güncellendi");
+
+      setTasks(newTasks);
+    } catch (error) {
+      console.log("Task güncelleme de hata", error);
+    }
+  };
+
+  // silme işlemi başarısını kontrol edicem, response yanıtı almama gerek yok
+  const deleteTask = async (taskId) => {
+    setLoading(true)
+    try {
+      await axios.delete(`${serverUrl}/task/${taskId}`);
+
+      const newTasks = tasks.filter((tsk) => tsk._id !== taskId);
+      setTasks(newTasks)
+    } catch (error) {
+        console.log("Task silme de hata", error);
+    }
+  };
+
+  const handleInput = (name) => (e) => {
+    if (name === "setTask") {
+      // inputla girilen event ile güncelle
+      setTask(e);
+    } else {
+      // e.target.value ile inputta girilen name'i al kopyaladığın task'a at
+      setTask({...task, [name]: e.target.value});
+    }
+  };
+
+  const completedTasks = tasks.filter((task) => task.completed);
+
+  const activeTasks = tasks.filter((task) => !task.completed);
+
+  // userID değişirse yeni görevler yeniden render edilmeli
+  useEffect(() => {
+    getTasks();
+  }, [userId]);
+
+
+  return (
+    <TasksContext.Provider
+      value={{
+        tasks,
+        loading,
+        task,
+        tasks,
+        getTask,
+        createTask,
+        updateTask,
+        deleteTask,
+        priority,
+        setPriority,
+        handleInput,
+        isEditing,
+        setIsEditing,
+        openModalForAdd,
+        openModalForEdit,
+        activeTask,
+        closeModal,
+        modalMode,
+        openProfileModal,
+        activeTasks,
+        completedTasks,
+        profileModal,
+      }}
+    >
+      {children}
+    </TasksContext.Provider>
+  );
+};
+
+export const useTasks = () => {
+  return React.useContext(TasksContext);
+};
