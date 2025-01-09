@@ -11,14 +11,14 @@ export const TasksProvider = ({children}) => {
   const userId = useUserContext().user._id
 
   const [tasks, setTasks] = useState([]); //birden fazla görevler
-  const [loading, setLoading = useState(false);
+  const [loading, setLoading] = useState(false);
   const [task, setTask] = useState({}); //tek bir görev
 
-  const [isEditing, setIsEditing] = useState(false)
-  const [priority, setPriority] = useState("Tümü")
-  const [activeTask, setActiveTask] = useState(null)
-  const [modelMode, setModelMode] = useState("")
-  const [profileMode, setProfileMode] = useState(false)
+  const [isEditing, setIsEditing] = useState(false);
+  const [priority, setPriority] = useState("Tümü");
+  const [activeTask, setActiveTask] = useState(null);
+  const [modelMode, setModelMode] = useState("");
+  const [profileMode, setProfileMode] = useState(false);
 
   const openModalForAdd = () => {
     setModelMode("add");
@@ -36,7 +36,7 @@ export const TasksProvider = ({children}) => {
     setProfileMode(true);
   };
 
-  const closeModal = () = {
+  const closeModal = () => {
     setIsEditing(false);
     setProfileMode(false);
     setActiveTask(null);
