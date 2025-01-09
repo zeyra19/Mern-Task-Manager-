@@ -8,7 +8,7 @@ const UserContext = createContext();
 // Backend çerezlerle çalıştığı için
 axios.defaults.withCredentials = true;
 
-export const UserContextProvider = ({children}) = {
+export const UserContextProvider = ({ children }) => {
   const serverUrl = "https://taskfyer.onrender.com";
 
   const router = useRouter();
@@ -314,10 +314,12 @@ export const UserContextProvider = ({children}) = {
   const handlerUserInput = (name) => (e) => {
     const value = e.target.value;
 
-    setUserState((prevState) = {
-      ...prevState,
-      [name]: value,
-    }));
+    setUserState((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
   };
 
   const deleteUser = async (id) => {
