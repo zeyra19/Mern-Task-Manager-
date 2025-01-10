@@ -5,7 +5,6 @@ import React, { useState } from "react";
 function ChangePasswordForm() {
   const { changePassword } = useUserContext();
 
-  // state
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +25,7 @@ function ChangePasswordForm() {
     e.preventDefault();
     changePassword(currentPassword, newPassword);
 
-    // clear input
+    // inputu temizle
     setCurrentPassword("");
     setNewPassword("");
   };
@@ -35,11 +34,11 @@ function ChangePasswordForm() {
     <form className="ml-0 mt-0 m-[2rem] px-10 py-14 rounded-lg bg-white max-w-[520px] w-full">
       <div className="relative z-10">
         <h1 className="mb-2 text-center text-[1.35rem] font-medium">
-          Reset Your Password!
+          Şifrenizi Sıfırlayın!
         </h1>
         <div className="relative mt-[1rem] flex flex-col">
           <label htmlFor="email" className="mb-1 text-[#999]">
-            Current Password
+            Mevcut Şifre
           </label>
           <input
             type={showPassword ? "text" : "password"}
@@ -64,7 +63,7 @@ function ChangePasswordForm() {
         </div>
         <div className="relative mt-[1rem] flex flex-col">
           <label htmlFor="email" className="mb-1 text-[#999]">
-            New Password
+            Yeni Şifre
           </label>
           <input
             type={showPassword ? "text" : "password"}
@@ -93,7 +92,7 @@ function ChangePasswordForm() {
             onClick={handleSubmit}
             className="mt-[1.5rem] flex-1 px-4 py-3 font-bold bg-[#2ECC71] text-white rounded-md hover:bg-[#1abc9c] transition-colors"
           >
-            Reset Password
+            Şifreyi Sıfırla
           </button>
         </div>
       </div>
