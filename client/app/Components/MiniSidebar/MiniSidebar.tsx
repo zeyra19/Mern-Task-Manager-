@@ -68,3 +68,5 @@ function MiniSidebar() {
     </div>
   );
 }
+
+export default MiniSidebar;

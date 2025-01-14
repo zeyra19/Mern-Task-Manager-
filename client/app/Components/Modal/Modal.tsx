@@ -51,7 +51,7 @@ function Modal() {
         ref={ref}
       >
         <div className="flex flex-col gap-1">
-          <label htmlFor="title">Title</label>
+          <label htmlFor="title">Başlık</label>
           <input
             className="bg-[#F9F9F9] p-2 rounded-md border"
             type="text"
@@ -63,7 +63,7 @@ function Modal() {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="description">Description</label>
+          <label htmlFor="description">Açıklama</label>
           <textarea
             className="bg-[#F9F9F9] p-2 rounded-md border resize-none"
             name="description"
@@ -74,20 +74,20 @@ function Modal() {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="priority">Select Priority</label>
+          <label htmlFor="priority">Öncelik derecesi:</label>
           <select
             className="bg-[#F9F9F9] p-2 rounded-md border cursor-pointer"
             name="priority"
             value={task.priority}
             onChange={(e) => handleInput("priority")(e)}
           >
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
+            <option value="low">Düşük</option>
+            <option value="medium">Orta</option>
+            <option value="high">Yüksek</option>
           </select>
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="dueDate">Due Date</label>
+          <label htmlFor="dueDate">Bitiş tarihi</label>
           <input
             className="bg-[#F9F9F9] p-2 rounded-md border"
             type="date"
@@ -97,9 +97,9 @@ function Modal() {
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="completed">Task Completed</label>
+          <label htmlFor="completed">Görev Tamamlandı</label>
           <div className="flex items-center justify-between bg-[#F9F9F9] p-2 rounded-md border">
-            <label htmlFor="completed">Completed</label>
+            <label htmlFor="completed">Tamamlandı</label>
             <div>
               <select
                 className="bg-[#F9F9F9] p-2 rounded-md border cursor-pointer"
@@ -107,8 +107,8 @@ function Modal() {
                 value={task.completed ? "true" : "false"}
                 onChange={(e) => handleInput("completed")(e)}
               >
-                <option value="false">No</option>
-                <option value="true">Yes</option>
+                <option value="false">Hayır</option>
+                <option value="true">Evet</option>
               </select>
             </div>
           </div>
@@ -121,7 +121,7 @@ function Modal() {
               modalMode === "edit" ? "bg-blue-400" : "bg-green-400"
             }`}
           >
-            {modalMode === "edit" ? "Update Task" : "Create Task"}
+            {modalMode === "edit" ? "Görevi güncelle" : "Görev oluştur"}
           </button>
         </div>
       </form>

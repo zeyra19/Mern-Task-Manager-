@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState, useContext } from "react";
 import toast from "react-hot-toast";
 
-const UserContext = createContext();
+const UserContext = React.createContext();
 
 // Backend çerezlerle çalıştığı için
 axios.defaults.withCredentials = true;

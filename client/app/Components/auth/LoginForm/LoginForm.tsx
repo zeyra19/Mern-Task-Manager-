@@ -16,12 +16,12 @@ function LoginForm() {
           Hesabınıza Giriş Yapın
         </h1>
         <p className="mb-8 px-[2rem] text-center text-[#999] text-[14px]">
-          Şimdi Giriş Yapın. Hesabınız Yok Mu?{" "}
+          Şimdi giriş yapın. Hesabınız yok mu?{" "}
           <a
             href="/register"
             className="font-bold text-[#2ECC71] hover:text-[#7263F3] transition-all duration-300"
           >
-            Buradan Kaydolun
+            Buradan kaydolun
           </a>
         </p>
 

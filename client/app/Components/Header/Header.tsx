@@ -53,7 +53,7 @@ function Header () {
 
         <div className="flex gap-4 items-center">
           <Link
-            href="https://github.com/Maclinz/taskfyer"
+            href="https://github.com/zeyra19/Mern-task-manager"
             passHref
             target="_blank"
             rel="noopener noreferrer"
@@ -62,7 +62,7 @@ function Header () {
             {github}
           </Link>
           <Link
-            href="https://github.com/Maclinz/taskfyer"
+            href="https://github.com/zeyra19/Mern-task-manager"
             passHref
             target="_blank"
             rel="noopener noreferrer"
@@ -71,7 +71,7 @@ function Header () {
             {moon}
           </Link>
           <Link
-            href="https://github.com/Maclinz/taskfyer"
+            href="https://github.com/zeyra19/Mern-task-manager"
             passHref
             target="_blank"
             rel="noopener noreferrer"
@@ -84,3 +84,5 @@ function Header () {
     </header>
   );
 }
+
+export default Header;

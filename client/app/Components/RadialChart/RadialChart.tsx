@@ -9,13 +9,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/components/chart";
 import { useTasks } from "@/context/taskContext";
 
 export const description = "Yığılmış bölümlere sahip radyal grafik";
@@ -31,7 +31,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-function RadicalChart() {
+function RadialChart() {
   const {
     tasks,
     activeTasks,
@@ -122,5 +122,4 @@ function RadicalChart() {
   );
 }
 
-
-export default RadialCHart;
+export default RadialChart;

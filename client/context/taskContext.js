@@ -17,30 +17,30 @@ export const TasksProvider = ({children}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [priority, setPriority] = useState("Tümü");
   const [activeTask, setActiveTask] = useState(null);
-  const [modelMode, setModelMode] = useState("");
-  const [profileMode, setProfileMode] = useState(false);
+  const [modalMode, setModalMode] = useState("");
+  const [profileModal, setProfileModal] = useState(false);
 
   const openModalForAdd = () => {
-    setModelMode("add");
+    setModalMode("add");
     setIsEditing(true);
     setTask({});
   }
 
   const openModalForEdit = (task) => {
-    setModelMode("edit");
+    setModalMode("edit");
     setIsEditing(true);
     setActiveTask(task);
   };
 
   const openProfileModal = () => {
-    setProfileMode(true);
+    setProfileModal(true);
   };
 
   const closeModal = () => {
     setIsEditing(false);
-    setProfileMode(false);
+    setProfileModal(false);
     setActiveTask(null);
-    setModelMode("");
+    setModalMode("");
     setTask({});
   };
 
