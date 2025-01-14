@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-import TaskSchema = new mongoose.Schema(
+const TaskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -44,6 +44,6 @@ import TaskSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const TaskModel = mongoose.model("Task", TaskSchema)
+const TaskModel = mongoose.model("Task", TaskSchema);
 
-export default TaskModel
+export default TaskModel;

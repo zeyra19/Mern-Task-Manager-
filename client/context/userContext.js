@@ -5,25 +5,14 @@ import toast from "react-hot-toast";
 
 const UserContext = React.createContext();
 
-// Backend çerezlerle çalıştığı için
 axios.defaults.withCredentials = true;
 
 export const UserContextProvider = ({ children }) => {
   const serverUrl = "https://taskfyer.onrender.com";
 
   const router = useRouter();
-  //  Bir kullanıcı bilgisi saklamak istiyoruz {}
-  //  {
-  //  username: "Zehra",
-  //  email: "zehra@example.com",
-  //  password: "123456"
-  //  }
+
   const [user, setUser] = useState({});
-  //  Birden fazla kullanıcı veya bir listede saklamak istiyoruz
-  // [
-  //  { id: 1, username: "zehra123", email: "zehra@example.com" },
-  //  { id: 2, username: "ogulcan456", email: "ogulcan@example.com" }
-  // ]
   const [allUsers, setAllUsers] = useState([]);
   const [userState, setUserState] = useState({
     name: "",
@@ -33,21 +22,20 @@ export const UserContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const registerUser = async (e) => {
-  // formun otomatik gönderilmesini ve sayfanın yenilenmesini engellemek için
     e.preventDefault();
     if (
       !userState.email.includes("@") ||
       !userState.password ||
       userState.password.length < 6
     ) {
-      toast.error("Lütfen geçerli bir email ve şifre girin (minimum 6 karakter)");
+      toast.error("Please enter a valid email and password (min 6 characters)");
       return;
     }
 
     try {
       const res = await axios.post(`${serverUrl}/api/v1/register`, userState);
-      console.log("Kullanıcı kaydı başarıyla oluşturuldu", res.data)
-      toast.success("Kullanıcı kaydı başarıyla oluşturuldu");
+      console.log("User registered successfully", res.data);
+      toast.success("User registered successfully");
 
       setUserState({
         name: "",
@@ -57,8 +45,7 @@ export const UserContextProvider = ({ children }) => {
 
       router.push("/login");
     } catch (error) {
-      console.log("Kullanıcı kaydı oluşmadı", error);
-      toast.error(error.response.data.message);
+      console.log("Error registering user", error);
     }
   };
 
@@ -76,7 +63,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Kullanıcı Login oldu")
+      toast.success("User logged in successfully");
 
       setUserState({
         email: "",
@@ -87,8 +74,7 @@ export const UserContextProvider = ({ children }) => {
 
       router.push("/");
     } catch (error) {
-        console.log("Kullanıcı login olamadı:(");
-        toast.error(error.response.data.message);
+      console.log("Error logging in user", error);
     }
   };
 
@@ -106,7 +92,7 @@ export const UserContextProvider = ({ children }) => {
         router.push("/login");
       }
     } catch (error) {
-        console.log("Login bilgilerini getirirken hata oluştu", error);
+      console.log("Error getting user login status", error);
     }
 
     return loggedIn;
@@ -118,14 +104,13 @@ export const UserContextProvider = ({ children }) => {
         withCredentials: true,
       });
 
-      toast.success("Kullanıcı çıkışı başarılı :)");
-      // Çıkış yapıldığında, bu bilgileri temizle
+      toast.success("User logged out successfully");
+
       setUser({});
 
       router.push("/login");
     } catch (error) {
-        console.log("Kullanıcı çıkışı başarısız", error);
-        toast.error(error.response.data.message);
+      console.log("Error logging out user", error);
     }
   };
 
@@ -136,7 +121,6 @@ export const UserContextProvider = ({ children }) => {
         withCredentials: true,
       });
 
-      // API'den alınan yeni veriyi mevcut duruma ekler.
       setUser((prevState) => {
         return {
           ...prevState,
@@ -146,15 +130,14 @@ export const UserContextProvider = ({ children }) => {
 
       setLoading(false);
     } catch (error) {
-        console.log("Kullanıcı bilgisini alamadım", error)
-        setLoading(false);
-        toast.error(error.response.data.message);
+      console.log("Error getting user details", error);
+      setLoading(false);
     }
   };
 
   const updateUser = async (e, data) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await axios.patch(`${serverUrl}/api/v1/user`, data, {
@@ -168,12 +151,12 @@ export const UserContextProvider = ({ children }) => {
         };
       });
 
-      toast.success("Kullanıcı başarıyla güncellendi");
+      toast.success("User updated successfully");
+
       setLoading(false);
     } catch (error) {
-      console.log("Kullanıcı bilgisi güncellenemedi", error);
+      console.log("Error updating user details", error);
       setLoading(false);
-      toast.error(error.response.data.message);
     }
   };
 
@@ -188,17 +171,16 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Emailinizi kontrol ediniz");
+      toast.success("Email verification sent successfully");
       setLoading(false);
     } catch (error) {
-        console.log("Email doğrulaması gönderilemedi", error);
-        setLoading(false);
-        toast.error(error.response.data.message);
+      console.log("Error sending email verification", error);
+      setLoading(false);
     }
   };
 
   const verifyUser = async (token) => {
-    setLoading(true)
+    setLoading(true);
     try {
       const res = await axios.post(
         `${serverUrl}/api/v1/verify-user/${token}`,
@@ -208,17 +190,14 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Kullanıcı doğrulama başarılı");
+      toast.success("User verified successfully");
 
-      // USer bilgilerini yenile
       getUser();
 
       setLoading(false);
-
       router.push("/");
     } catch (error) {
-      console.log("Kullanıcı doğrulama da hata", error);
-      toast.error(error.response.data.message);
+      console.log("Error verifying user", error);
       setLoading(false);
     }
   };
@@ -237,17 +216,17 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Emailinizi kontrol ediniz");
-      setLoading(false)
+      toast.success("Forgot password email sent successfully");
+      setLoading(false);
     } catch (error) {
-      console.log("Şifremi unuttum mailinde hata", error);
-      toast.error(error.response.data.message);
+      console.log("Error sending forgot password email", error);
       setLoading(false);
     }
   };
 
   const resetPassword = async (token, password) => {
     setLoading(true);
+
     try {
       const res = await axios.post(
         `${serverUrl}/api/v1/reset-password/${token}`,
@@ -259,21 +238,20 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Şifre sıfırlama başarılı");
+      toast.success("Password reset successfully");
       setLoading(false);
 
       router.push("/login");
     } catch (error) {
-        console.log("Şifre sıfırlamada hata", error);
-        toast.error(error.response.data.message);
-        setLoading(false);
+      console.log("Error resetting password", error);
+      setLoading(false);
     }
   };
 
   const changePassword = async (currentPassword, newPassword) => {
     setLoading(true);
+
     try {
-      // Mevcut bir kaynağı güncellemek için PATCH
       const res = await axios.patch(
         `${serverUrl}/api/v1/change-password`,
         { currentPassword, newPassword },
@@ -282,12 +260,11 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.succes("Şifre başarıyla değişitirildi");
+      toast.success("Password changed successfully");
       setLoading(false);
     } catch (error) {
-        console.log("Şifre değişitirilemedi", error);
-        toast.error(error.response.data.message);
-        setLoading(false);
+      console.log("Error changing password", error);
+      setLoading(false);
     }
   };
 
@@ -306,7 +283,6 @@ export const UserContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log("Error getting all users", error);
-      toast.error(error.response.data.message);
       setLoading(false);
     }
   };
@@ -314,12 +290,10 @@ export const UserContextProvider = ({ children }) => {
   const handlerUserInput = (name) => (e) => {
     const value = e.target.value;
 
-    setUserState((prevState) => {
-      return {
-        ...prevState,
-        [name]: value,
-      };
-    });
+    setUserState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   const deleteUser = async (id) => {
@@ -333,20 +307,18 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Kullanıcı başarıyla silindi");
+      toast.success("User deleted successfully");
       setLoading(false);
-      // kullanıcı listesi yenile
       getAllUsers();
     } catch (error) {
-      console.log("Kullanıcı silinemedi", error);
-      toast.error(error.response.data.message);
+      console.log("Error deleting user", error);
       setLoading(false);
     }
   };
 
   useEffect(() => {
     const loginStatusGetUser = async () => {
-      const isLoggedIn = await userLoginStatus()
+      const isLoggedIn = await userLoginStatus();
 
       if (isLoggedIn) {
         await getUser();
@@ -360,10 +332,9 @@ export const UserContextProvider = ({ children }) => {
     if (user.role === "admin") {
       getAllUsers();
     }
-  }, [user.role])
+  }, [user.role]);
 
-
-   return (
+  return (
     <UserContext.Provider
       value={{
         registerUser,
@@ -383,11 +354,11 @@ export const UserContextProvider = ({ children }) => {
         deleteUser,
       }}
     >
-    {children}
+      {children}
     </UserContext.Provider>
-   );
+  );
 };
 
 export const useUserContext = () => {
-  return React.useContext(UserContext);
+  return useContext(UserContext);
 };
