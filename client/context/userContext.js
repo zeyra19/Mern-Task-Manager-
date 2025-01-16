@@ -35,7 +35,6 @@ export const UserContextProvider = ({ children }) => {
     try {
       const res = await axios.post(`${serverUrl}/api/v1/register`, userState);
       console.log("User registered successfully", res.data);
-      toast.success("User registered successfully");
 
       setUserState({
         name: "",
@@ -62,8 +61,6 @@ export const UserContextProvider = ({ children }) => {
           withCredentials: true,
         }
       );
-
-      toast.success("User logged in successfully");
 
       setUserState({
         email: "",
@@ -104,7 +101,7 @@ export const UserContextProvider = ({ children }) => {
         withCredentials: true,
       });
 
-      toast.success("User logged out successfully");
+      console.log("User logged out successfully");
 
       setUser({});
 
@@ -151,7 +148,7 @@ export const UserContextProvider = ({ children }) => {
         };
       });
 
-      toast.success("User updated successfully");
+      console.log("User updated successfully");
 
       setLoading(false);
     } catch (error) {
@@ -171,7 +168,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Email verification sent successfully");
+      console.log("Email verification sent successfully");
       setLoading(false);
     } catch (error) {
       console.log("Error sending email verification", error);
@@ -190,7 +187,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("User verified successfully");
+      console.log("User verified successfully");
 
       getUser();
 
@@ -216,7 +213,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Forgot password email sent successfully");
+      console.log("Forgot password email sent successfully");
       setLoading(false);
     } catch (error) {
       console.log("Error sending forgot password email", error);
@@ -238,7 +235,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Password reset successfully");
+      console.log("Password reset successfully");
       setLoading(false);
 
       router.push("/login");
@@ -260,7 +257,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("Password changed successfully");
+      console.log("Password changed successfully");
       setLoading(false);
     } catch (error) {
       console.log("Error changing password", error);
@@ -307,7 +304,7 @@ export const UserContextProvider = ({ children }) => {
         }
       );
 
-      toast.success("User deleted successfully");
+      console.log("User deleted successfully");
       setLoading(false);
       getAllUsers();
     } catch (error) {

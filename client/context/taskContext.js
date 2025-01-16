@@ -15,7 +15,7 @@ export const TasksProvider = ({children}) => {
   const [task, setTask] = useState({}); //tek bir görev
 
   const [isEditing, setIsEditing] = useState(false);
-  const [priority, setPriority] = useState("Tümü");
+  const [priority, setPriority] = useState("All");
   const [activeTask, setActiveTask] = useState(null);
   const [modalMode, setModalMode] = useState("");
   const [profileModal, setProfileModal] = useState(false);
@@ -74,10 +74,8 @@ export const TasksProvider = ({children}) => {
     try {
       const res = await axios.post(`${serverUrl}/task/create`, task);
 
-      console.log("Task Oluştu", res.data);
-
       setTasks([...tasks, res.data]);
-      toast.success("Task başarıyla oluştu")
+      console.log("Task başarıyla oluştu")
     } catch (error) {
       console.log("Task verisi getirilemedi", error)
     }
@@ -96,8 +94,6 @@ export const TasksProvider = ({children}) => {
           return tsk;
         }
       });
-
-      toast.success("Task başarıyla güncellendi");
 
       setTasks(newTasks);
     } catch (error) {
